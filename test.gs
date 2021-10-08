@@ -17,3 +17,4 @@ function runQuery() {
     sleepTimeMs *= 2;
     queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId);
   }
+console.Log(queryResults)
