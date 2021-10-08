@@ -1,20 +1,4 @@
-function runQuery() {
-  // Replace this value with the project ID listed in the Google
-  // Cloud Platform project.
-  var projectId = 'nyt-bigquery-beta-workspace';
-
-  var request = {
-    query: 'SELECT COUNT(*) ' +
-      'FROM `nyt-bigquery-beta-workspace.caa_tables.content_prod`;'
-  };
-  var queryResults = BigQuery.Jobs.query(request, projectId);
-  var jobId = queryResults.jobReference.jobId;
-
-  // Check on status of the Query Job.
-  var sleepTimeMs = 500;
-  while (!queryResults.jobComplete) {
-    Utilities.sleep(sleepTimeMs);
-    sleepTimeMs *= 2;
-    queryResults = BigQuery.Jobs.getQueryResults(projectId, jobId);
-  }
-console.Log(queryResults)
+CREATE OR REPLACE FUNCTION `nyt-bigquery-beta-workspace.gerard_data.CLEAN_URL`(url STRING)
+OPTIONS (description="This function cleans the URL from 'https://' to 'http://'. This is useful when using URLs instead of uris to match specific pieces.") AS (
+REGEXP_REPLACE(url, "https://", "http://")
+);
